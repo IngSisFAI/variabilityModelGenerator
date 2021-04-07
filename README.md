@@ -1,5 +1,12 @@
 # variabilityModelGenerator
 
+Esta herramienta, denominada Generador Automatico de Modelos de Variabilidad, permite
+generar diferentes modelos compuestos por servicios, dependencias de variabilidad e
+inconsistencias en forma aleatoria. La misma, esta basada en los elementos, relaciones e
+interacciones definidas en el modelado SeVaTax 
+
+Para Ejecutar
+
 Definir los parametros en generator.py y ejecutar 
 
 Cantidad de Servicios (SQ): Indica la cantidad de servicios diferentes que deben
