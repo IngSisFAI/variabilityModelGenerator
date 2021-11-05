@@ -9,7 +9,7 @@ The tool takes into account the  interactions defined in the following table.
 
 This tool lets the designer setup the number of variability models to be created, together with the number of services, variability points, dependencies, and levels for each of these models.
 Also, designers can specify the number of inconsistencies or it can be setup as automatic.
-Test cases used in the experiments are available from  variabilityModelGenerator/tree/master/testCases.
+Test cases used in the experiments are available from  `variabilityModelGenerator/tree/master/testCases`.
 
 
 ## Implementation
