@@ -1,7 +1,7 @@
 ## Variability Model Generator
 
 
-The Variability Model Generator was implemented to automatically generate variability models adapted to SeVataX models.
+The Variability Model Generator was implemented to automatically generates variability models adapted to SeVataX models.
 The tool takes into account the  interactions defined in the following table.
 
 ![Screenshot](table.png)
