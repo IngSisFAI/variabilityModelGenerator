@@ -28,7 +28,7 @@ Model Levels (MP): Indicating the max level of each variation point from root to
 
 Number of incompatibilities (IQ): Indicating the number of different incompatibilities to be added.
 
-Example;
+Example:
 
 SQ = 30
 RC = 5
