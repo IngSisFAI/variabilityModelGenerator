@@ -1,27 +1,34 @@
-# variabilityModelGenerator
+## Variability Model Generator
 
-Esta herramienta, denominada Generador Automatico de Modelos de Variabilidad, permite
-generar diferentes modelos compuestos por servicios, dependencias de variabilidad e
-inconsistencias en forma aleatoria. La misma, esta basada en los elementos, relaciones e
-interacciones definidas en el modelado SeVaTax 
 
-Para Ejecutar
+The Variability Model Generator was implemented to automatically generate variability models adapted to SeVataX models.
+The tool takes into account the  interactions defined in the following table.
 
-Definir los parametros en generator.py y ejecutar 
+![Screenshot](table.png)
 
-Cantidad de Servicios (SQ): Indica la cantidad de servicios diferentes que deben
-contener los modelos de variabilidad.
- Complejidad de las Relaciones (RC): Indica la cantidad de dependencias (requiere,
-excluye y usa) que deben incluirse.
 
- Profundidad de Modelo (MP): Indica el numero maximo de niveles de puntos
-variantes correlativos que pueden incluirse en cada modelo de variabilidad desde
-la raiz hasta las hojas. 
+This tool lets the designer setup the number of variability models to be created, together with the number of services, variability points, dependencies, and levels for each of these models.
+Also, designers can specify the number of inconsistencies or it can be setup as automatic.
+Test cases used in the experiments are available from  variabilityModelGenerator/tree/master/testCases.
 
-Cantidad de Inconsistencias (IQ): Indica la cantidad de inconsistencias que
-pueden ser agregadas.
 
-ejemplo 
+## Implementation
+
+ Clone and/or download the project.
+
+
+Define parameters in generator.py and run `ng serve` for a localhost implementation. Go to `http://localhost:4200/`.
+
+#parameters
+
+Number of Services (SQ): Indicating the number of different services to be created in the variability models.
+Relation Complexity (RC): Indicating the number of different <<require>>, <<exclude>> and <<use>> dependencies  to be included in the variability models.
+
+Model Levels (MP): Indicating the max level of each variation point from root to leafs.
+
+Number of incompatibilities (IQ): Indicating the number of different incompatibilities to be added.
+
+Example;
 
 SQ = 30
 RC = 5
