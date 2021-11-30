@@ -6,8 +6,13 @@ import random
 import services.services_gen as SN
 import scenarios.finder as finder
 
+import generator_log as GL
+
+
 datasheet_config=""
 new_index =0
+
+
 
 def add_scenario(datasheet,IQ,selected_scenarios,service_name: SN.ServiceNAME,datasheet_two):
     datasheet_config = datasheet
@@ -126,11 +131,15 @@ def add_Falso_Opcional(datasheet_config, service_name: SN.ServiceNAME):
         name_service=all_services[random_index]
       
         
-        AD_config= {"requires": {"service": {"name": name_service}}}
-        print("---------")
-        print("Agregando Falso Opcionalpara: ",name_service)
-        print(AD_config)
-        print("---------")
+        #------- log -------
+        gen_log =  GL.generator_log(True) 
+        log = "False Optional - Service: " + name_service
+        details=AD_config
+        gen_log.add_inconsistency_log(log, details)
+        #-------------------
+        
+        
+        
         finder.add_extra_scenario(datasheet_config,mandatory_name_service,AD_config)
 
 def add_Auto_Dependencia(datasheet_config, service_name: SN.ServiceNAME):
@@ -142,10 +151,15 @@ def add_Auto_Dependencia(datasheet_config, service_name: SN.ServiceNAME):
            AD_config= {"excludes": {"service": {"name": parent_service}}}
     else:
         AD_config= { "requires": {"service": {"name": parent_service}}}
-    print("---------")
-    print("Agregando auto dependencia para: ",parent_service)
-    print(AD_config)
-    print("---------")
+    
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Self Dependency - Service: " + parent_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
+    
+    
     finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
 
 def add_Violaciones_PV():
@@ -162,10 +176,14 @@ def add_constraint_contradiction(datasheet_config, service_name: SN.ServiceNAME)
                                          "excludes": {"service": {"name": parent_service}}
                                          }}}
      
-    print("---------")
-    print("Agregando constraint contradiction para: ",parent_service)
-    print(AD_config)
-    print("---------")
+    
+    
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Constraint Contradiction - Service: " + parent_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
     finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
 
 def add_alternative_inclusion(datasheet_config, service_name: SN.ServiceNAME):
@@ -183,10 +201,13 @@ def add_alternative_inclusion(datasheet_config, service_name: SN.ServiceNAME):
             name_service = list_services_vp[random.randint(1,len(list_services_vp)-1)]
             AD_config= {"requires": {"service": {"name": name_service}}}
         
-            print("---------")
-            print("Agregando alternative inclusion para: ",parent_service)
-            print(AD_config)
-            print("---------")
+        
+            #------- log -------
+            gen_log =  GL.generator_log(True) 
+            log = "Alternative Inclusion: " + parent_service
+            details=AD_config
+            gen_log.add_inconsistency_log(log, details)
+            #-------------------
             
             finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
     
@@ -204,12 +225,15 @@ def add_mandatory_exclude(datasheet_config, service_name: SN.ServiceNAME):
         random_index = random.randint(0, len(list_mandatory)-1)
         mandatory_name_service=list_mandatory[random_index]
       
-        
         AD_config= {"excludes": {"service": {"name": mandatory_name_service}}}
-        print("---------")
-        print("Agregando Mandatory Exclude para: ",name_service," con ", mandatory_name_service)
-        print(AD_config)
-        print("---------")
+        #------- log -------
+        gen_log =  GL.generator_log(True) 
+        log = "Mandatory Exclude - service: "+name_service+" & "+ mandatory_name_service
+        details=AD_config
+        gen_log.add_inconsistency_log(log, details)
+        #-------------------
+       
+        
         finder.add_extra_scenario(datasheet_config,name_service,AD_config)
 
 
@@ -232,10 +256,17 @@ def add_Parent_exclude(datasheet_config, service_name: SN.ServiceNAME):
   
     
     AD_config= {"excludes": {"service": {"name": parent_name_service}}}
-    print("---------")
-    print("Agregando Parent Exclude para: ",name_service," con ", parent_name_service)
-    print(AD_config)
-    print("---------")
+   
+    
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Parent Exclude - service: "+name_service+" & "+ parent_name_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
+    
+    
+    
     finder.add_extra_scenario(datasheet_config,name_service,AD_config)
    
     
@@ -253,10 +284,13 @@ def add_transitive_inconsistency(datasheet_config, service_name: SN.ServiceNAME)
     AD_config= {"excludes": {"service":{"name": service2  }}}
     finder.add_extra_scenario(datasheet_config,parent_service,AD_config)                                  
      
-    print("---------")
-    print("Agregando transitive Inconsistency para: ",parent_service)
-    print(AD_config)
-    print("---------")
+   
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Transitive Inconsistency - service: "+parent_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
    
 
 # Redundancias
@@ -273,15 +307,17 @@ def add_mandatory_include(datasheet_config, service_name: SN.ServiceNAME):
         random_index = random.randint(0, len(list_mandatory)-1)
         mandatory_name_service=list_mandatory[random_index]
       
-        
         AD_config= {"requires": {"service": {"name": mandatory_name_service}}}
-        print("---------")
-        print("Agregando Mandatory Includes para: ",name_service," con ", mandatory_name_service)
-        print(AD_config)
-        print("---------")
+        
+        #------- log -------
+        gen_log =  GL.generator_log(True) 
+        log = "Mandatory Includes  - service: "+name_service+" & "+ mandatory_name_service
+        details=AD_config
+        gen_log.add_inconsistency_log(log, details)
+        #-------------------
+        
         finder.add_extra_scenario(datasheet_config,name_service,AD_config)
-
-
+        
 
 def add_Parent_inclusion(datasheet_config, service_name: SN.ServiceNAME):
     AD_config =""
@@ -296,16 +332,19 @@ def add_Parent_inclusion(datasheet_config, service_name: SN.ServiceNAME):
         if list_parents!=[]:
             find_service=False
     
-    random_index = random.randint(0, len(list_parents)-1)
-       
+    random_index = random.randint(0, len(list_parents)-1)    
     parent_name_service=list_parents[random_index]
   
     
     AD_config= {"requires": {"service": {"name": parent_name_service}}}
-    print("---------")
-    print("Agregando Parent Inclusion para: ",name_service," con ", parent_name_service)
-    print(AD_config)
-    print("---------")
+
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Parent Includes  - service: "+name_service+" & "+ parent_name_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
+    
     finder.add_extra_scenario(datasheet_config,name_service,AD_config)
    
 
@@ -323,12 +362,15 @@ def add_alternative_exclude(datasheet_config, service_name: SN.ServiceNAME):
         if list_services_vp!=[]:
             parent_service=list_services_vp[0]
             name_service = list_services_vp[random.randint(1,len(list_services_vp)-1)]
+            
             AD_config= {"excludes": {"service": {"name": name_service}}}
         
-            print("---------")
-            print("Agregando alternative excludes para: ",parent_service)
-            print(AD_config)
-            print("---------")
+            #------- log -------
+            gen_log =  GL.generator_log(True) 
+            log = "Alternative excludesn  - service: "+ parent_service
+            details=AD_config
+            gen_log.add_inconsistency_log(log, details)
+            #-------------------
             
             finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
 
@@ -343,10 +385,15 @@ def add_transitive_redundancy(datasheet_config, service_name: SN.ServiceNAME):
                                          {"name": service2}
                                             ]}}
      
-    print("---------")
-    print("Agregando transitive redundancy para: ",parent_service)
-    print(AD_config)
-    print("---------")
+    
+    
+    
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "Transitive redundancy   - service: "+ parent_service
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
     finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
 
 
@@ -367,10 +414,13 @@ def falso_Specific(datasheet_config, service_name: SN.ServiceNAME):
                                                            }]
                                          }}}}}
     
-    print("---------")
-    print("Agregando falso_Specific ")
-    print(AD_config)
-    print("---------")
+   
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log = "False specific  - service: "
+    details=AD_config
+    gen_log.add_inconsistency_log(log, details)
+    #-------------------
     finder.add_extra_scenario(datasheet_config,parent_service,AD_config)
     
   

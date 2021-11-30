@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import random
-import json
+
 import relationship.relationship as rel
 import scenarios.scenarios as sce 
 import services.services_gen as SN
+import generator_log as GL
 
 
 service_name = SN.ServiceNAME
@@ -18,6 +19,8 @@ currentRC = 0
 
 def add_service(simpleService, parent_name=""):
     
+    
+    
     service_config= add_service_config(simpleService, parent_name)
     
     service= {"service": service_config }
@@ -26,6 +29,14 @@ def add_service(simpleService, parent_name=""):
 
 def add_service_config(simpleService, parent_name=""):
     name= service_name.get_service_name(parent_name)
+    
+    #------- log -------
+    gen_log =  GL.generator_log(True) 
+    log= 'Addig service ' + name
+    gen_log.console_log(log)
+    
+    #-------------------
+    
     
     service_config= {"name": name}
     
@@ -78,6 +89,8 @@ def add_VP(parent_name):
 
 def add_dependency(parent_name,dependency_type=""):
 #    sce_config = sce.add_constraint_contradiction(service_name,parent_name)
+    
+   
     global currentRC
    
     dependency_config=""
@@ -87,6 +100,15 @@ def add_dependency(parent_name,dependency_type=""):
         if dependency_type=="":
             dependency_type= rel.get_Dependency_Type()
         dependency_config= {dependency_type:{"service":service}}
+
+        #------- log -------
+        gen_log =  GL.generator_log(True) 
+        log= 'Addig dependency ' + parent_name +' '+dependency_type+' '+ str(service)
+        gen_log.console_log(log)
+        #-------------------
+
+
+
     return dependency_config
 #    return sce_config
     
@@ -157,25 +179,40 @@ def check_RC(datasheet,RC):
 
 
 
-def create_single_datasheet(SQ_val,RC_val,MP_val,IQ_val,selected_scenarios):
+def create_single_datasheet(SQ_val,RC_val,MP_val,IQ_val,selected_scenarios,ID_dat):
+    
+
+    gen_log =  GL.generator_log(True) 
+    gen_log.console_log('Create a single datasheet')
+    
+    
     global SQ, RC, MP , IQ, service_name
     SQ = SQ_val
     RC = RC_val
     MP = MP_val
     IQ = IQ_val
     
+    
+    gen_log.console_log('Create a Service Name service')
+    log='Adding datasheet ID: ' + ID_dat
+    gen_log.console_log(log)
+
+    
     service_name = SN.ServiceNAME(SQ)
     
-    datasheet= { "id": "Model_Name"}
+    datasheet= { "id": ID_dat}
     service = add_service(False)
     
-    datasheet.update(service ) 
+    
+    datasheet.update(service) 
     check_RC(datasheet,RC)
     
     if IQ >0 or selected_scenarios!=[] : 
         datasheet=sce.add_scenario(datasheet,IQ,selected_scenarios,service_name,[])
-    print("----------------------------------------------------------------")
-    print(json.dumps(datasheet))
+    
+    return datasheet
+    
+    
     
     
 #    
@@ -207,8 +244,7 @@ def create_multiple_datasheet(SQ_val,RC_val,MP_val,IQ_val,selected_scenarios):
     if IQ >0 or selected_scenarios!=[] : 
         datasheet=sce.add_scenario(datasheet,IQ,selected_scenarios,service_name,datasheet2)
 
-    print("----------------------------------------------------------------")
-    print(json.dumps(datasheet))
+    return datasheet
     
     
 
